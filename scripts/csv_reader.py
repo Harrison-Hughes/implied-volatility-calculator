@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 import csv
+from pathlib import Path
+
+csv_data_path = Path(__file__).parent.parent / Path("data/market_data.csv")
+print(Path(__file__).parent.parent / "data/market_data.csv")
 
 
-def dictionaryFormatter(row, keys):
-    info = {keys[i]: row[i] for i in range(len(row))}
-    print(info)
-
-
-with open('marketData.csv', mode='r') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
+def printCsvFileAsDictionary(file):
     line_count = 0
     keys = []
     for row in csv_reader:
@@ -21,3 +19,13 @@ with open('marketData.csv', mode='r') as csv_file:
             dictionaryFormatter(row, keys)
             line_count += 1
     print(f'Processed {line_count} lines.')
+
+
+def dictionaryFormatter(row, keys):
+    info = {keys[i]: row[i] for i in range(len(row))}
+    print(info)
+
+
+with open(csv_data_path, mode='r') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    printCsvFileAsDictionary(csv_reader)
