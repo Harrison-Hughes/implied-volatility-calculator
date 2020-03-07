@@ -1,17 +1,21 @@
 import sys
-inFile = sys.argv[1]
-outFile = sys.argv[2]
+import csv
+import scripts.csv_reader
+
+file_input = sys.argv[1]
+file_output = sys.argv[2]
 
 
 def manipulateData(lines):
     return lines
 
 
-with open(inFile, 'r') as i:
-    lines = i.readlines()
+with open(file_input, 'r') as input:
+    input_reader = csv.reader(input, delimiter=',')
+    lines = input.readlines()
 
 processedLines = manipulateData(lines)
 
-with open(outFile, 'w') as o:
+with open(file_output, 'w') as output:
     for line in processedLines:
-        o.write(line)
+        output.write(line)
