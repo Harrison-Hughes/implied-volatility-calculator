@@ -16,7 +16,6 @@ csv_data_path = Path(__file__).parent.parent / Path("data/market_data.csv")
 
 def convert_to_array_of_dict(lines):
     line_count, keys, data = 0, [], []
-    print(lines)
     for row in lines:
         if line_count == 0:
             keys = row
@@ -26,6 +25,8 @@ def convert_to_array_of_dict(lines):
         else:
             data.append(dictionaryFormatter(row, keys))
             line_count += 1
+    print(data)
+    return data
 
 
 def printCsvFileAsDictionary(file):
@@ -47,6 +48,6 @@ def dictionaryFormatter(row, keys):
     return {keys[i]: row[i] for i in range(len(row))}
 
 
-with open(csv_data_path, mode='r') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    printCsvFileAsDictionary(csv_reader)
+# with open(csv_data_path, mode='r') as csv_file:
+#     csv_reader = csv.reader(csv_file, delimiter=',')
+#     printCsvFileAsDictionary(csv_reader)
