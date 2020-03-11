@@ -1,20 +1,23 @@
 import sys
 import csv
-import scripts.csv_reader
+from scripts.csv_reader import convert_to_array_of_dict
 
 file_input = sys.argv[1]
 file_output = sys.argv[2]
 
 
-def manipulateData(lines):
+def process_data(lines):
+    print(lines)
+    # arr = convert_to_array_of_dict(lines)
     return lines
 
 
 with open(file_input, 'r') as input:
     input_reader = csv.reader(input, delimiter=',')
-    lines = input.readlines()
+    print(input_reader)
+    # lines = input.readlines()
 
-processedLines = manipulateData(lines)
+processedLines = process_data(input_reader)
 
 with open(file_output, 'w') as output:
     for line in processedLines:
