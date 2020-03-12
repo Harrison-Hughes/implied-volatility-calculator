@@ -14,16 +14,35 @@ def convert_to_array_of_dict(lines, break_point=-1):
         else:
             data.append(dictionaryFormatter(row, keys))
             line_count += 1
-    # print(data)
     return data
 
 
-# using dictionaries allows data to be found by key-value pair instead of location
+# using dictionaries allows data to be found by key-value pairing instead of location
 # also immune to structural changes in csv file
 def dictionaryFormatter(row, keys):
     return {keys[i]: row[i] for i in range(len(row))}
 
 
+# iterates through the csv data to create object instances of each row
+# then calls polymorphic_solve on each instance to return
+def process_data(data):
+    data_entries = []
+    for entry in data:
+        data_object = create_data_object(entry)
+        data_entries.append(data_object)
+    csv_return_body = polymorphic_solve(data_entries)
+    return csv_return_body
+
+
+# uses polymorphism to call the calc_implied_volatility method of each data instance
+def polymorphic_solve(data_entries):
+    results = []
+    for data_entry in data_entries:
+        results.append(data_entry.calc_implied_volatility())
+    return results
+
+
+#
 def create_data_object(data):
     if data['Model Type'] == 'Bachelier':
         model = Bachelier(data)
