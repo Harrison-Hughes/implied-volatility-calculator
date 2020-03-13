@@ -95,16 +95,14 @@ def bisection_method(a, b):
     return (a + b) / 2
 
 
-def f(x): return x**2 - 20
+if __name__ == '__main__':
+    def f(x): return x**2 - 20
+    def g(x): return (x + 3) * (x - 1) ** 2
 
+    root, steps = brent_dekker(f, 3, 5, tolerance=10e-8)
+    print('root is: {}'.format(root))
+    print('steps taken: {}'.format(steps))
 
-def g(x): return (x + 3) * (x - 1) ** 2
-
-
-root, steps = brent_dekker(f, 3, 5, tolerance=10e-8)
-print('root is: {}'.format(root))
-print('steps taken: {}'.format(steps))
-
-root, steps = brent_dekker(g, -4, 0.006, tolerance=10e-8)
-print('root is: {}'.format(root))
-print('steps taken: {}'.format(steps))
+    root, steps = brent_dekker(g, -4, 0.006, tolerance=10e-8)
+    print('root is: {}'.format(root))
+    print('steps taken: {}'.format(steps))
