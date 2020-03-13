@@ -42,7 +42,7 @@ def polymorphic_solve(data_entries):
     return results
 
 
-#
+# creates an object instance of either a Bachelier or BlackScholes type data entry
 def create_data_object(data):
     if data['Model Type'] == 'Bachelier':
         model = Bachelier(data)

@@ -24,22 +24,22 @@ class TestBrentDekkerRootFinder(unittest.TestCase):
 
     def test_brent_dekker(self):
         def func1(x): return x**2 - 20  # roots known as +- sqrt(20) ~ +-4.47
-        self.assertTrue(isclose(bd.brent_dekker(
-            func1, 4, 5)[0], sqrt(20)))
-        self.assertTrue(isclose(bd.brent_dekker(
-            func1, 5, 4)[0], sqrt(20)))
-        self.assertTrue(isclose(bd.brent_dekker(
-            func1, -4, -5)[0], -1*sqrt(20)))
-        self.assertTrue(isnan(bd.brent_dekker(
-            func1, -6, -5)[0]))
+        self.assertTrue(isclose(bd.brent_dekker(  # pos root
+            func1, 4, 5), sqrt(20)))
+        self.assertTrue(isclose(bd.brent_dekker(  # pos root with start points flipped
+            func1, 5, 4), sqrt(20)))
+        self.assertTrue(isclose(bd.brent_dekker(  # neg root
+            func1, -4, -5), -1*sqrt(20)))
+        self.assertTrue(isnan(bd.brent_dekker(  # no root between initial guesses
+            func1, -6, -5)))
 
         def func2(x): return cos(x) + 2*sin(x) + x**2
         self.assertTrue(
-            isclose(bd.brent_dekker(func2, 0, -1)[0], -0.659266046))
+            isclose(bd.brent_dekker(func2, 0, -1), -0.659266046))  # upper root
         self.assertTrue(
-            isclose(bd.brent_dekker(func2, -2, -1)[0], -1.271026800))
-        self.assertTrue(isnan(bd.brent_dekker(
-            func1, -2, 0)[0]))
+            isclose(bd.brent_dekker(func2, -2, -1), -1.271026800))  # lower root
+        self.assertTrue(isnan(bd.brent_dekker(  # no root between initial guesses
+            func1, -2, 0)))
 
 
 if __name__ == "__main__":
