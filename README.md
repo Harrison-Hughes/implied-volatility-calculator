@@ -11,3 +11,11 @@ To use:
 - To use the data given to me specifically, replace 'input_file.csv' with 'data/market_data.csv'
 
 - i.e. python3 app.py data/market_data.csv output_file.csv
+
+To run unit tests:
+
+- Enter the root directory / directory containing the file 'app.py'
+
+- In the CLI, run: 'python3 -m unittest unit_tests/test_example.py', where test_example.py is the test file you wish to run
+
+- e.g. python3 -m unittest unit_tests/test_brent_dekker.py
