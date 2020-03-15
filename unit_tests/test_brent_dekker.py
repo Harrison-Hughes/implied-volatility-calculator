@@ -29,7 +29,7 @@ class TestBrentDekkerRootFinder(unittest.TestCase):
         self.assertTrue(isclose(bd.brent_dekker(  # pos root with start points flipped
             func1, 5, 4), sqrt(20)))
         self.assertTrue(isclose(bd.brent_dekker(  # neg root
-            func1, -4, -5), -1*sqrt(20)))
+            func1, -4, -5), -sqrt(20)))
         self.assertTrue(isnan(bd.brent_dekker(  # no root between initial guesses
             func1, -6, -5)))
 

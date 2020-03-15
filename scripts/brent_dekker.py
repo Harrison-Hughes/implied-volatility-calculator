@@ -7,6 +7,7 @@ def brent_dekker(f, a, b, max_iter=50, tolerance=1e-8, return_num_of_steps=False
 
     # verifies that initial guesses lie either side of the root, else returns 'nan'
     if (f(a) * f(b)) > 0:
+        print('bad guesses')
         if return_num_of_steps:
             return float('nan'), 0
         else:
@@ -24,7 +25,7 @@ def brent_dekker(f, a, b, max_iter=50, tolerance=1e-8, return_num_of_steps=False
     steps_taken = 0
 
     # iterates until solution criteria are met
-    while steps_taken < max_iter and abs(b-a) > tolerance and f(b) != 0.0 and f(c) != 0.0:
+    while steps_taken < max_iter and abs(b - a) > tolerance and f(b) != 0.0 and f(c) != 0.0:
         a, b, c, d, prev_iter_used_bi = brent_dekker_iterative_converge(
             f, a, b, c, d, prev_iter_used_bi, tolerance)
         steps_taken += 1
@@ -99,15 +100,20 @@ def condition_for_bisection_method(a, b, c, d, s, mflag, tolerance):
 
 
 def bisection_method(a, b):
-    return (a + b) / 2
+    return (a + b) / 2.0
 
 
 if __name__ == '__main__':
-    def f(x): return x**2 - 20
+    def f(x): return x ** 2 - 20
     def g(x): return (x + 3) * (x - 1) ** 2
 
     root, steps = brent_dekker(
         f, 3, 5, tolerance=10e-8, return_num_of_steps=True)
+    print('root is: {}'.format(root))
+    print('steps taken: {}'.format(steps))
+
+    root, steps = brent_dekker(
+        f, 2.5, 5.5, tolerance=10e-8, return_num_of_steps=True)
     print('root is: {}'.format(root))
     print('steps taken: {}'.format(steps))
 
