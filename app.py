@@ -20,10 +20,9 @@ with open(file_output, 'w') as output:
     output_writer.writerow(['ID', 'Spot', 'Strike', 'Risk-Free Rate', 'Years to Expiry',
                             'Option Type', 'Model Type', 'Implied Volatility', 'Market Price'])
     nan_count = 0
+
     for line in processedLines:
-        # print(line[7])
         if isnan(line[7]):
             nan_count += 1
-        if line[6] == 'BlackScholes':
-            output_writer.writerow(line)
+        output_writer.writerow(line)
     print('total nan results: ', nan_count)

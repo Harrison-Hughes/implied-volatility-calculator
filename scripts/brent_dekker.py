@@ -88,7 +88,7 @@ def condition_for_bisection_method(a, b, c, d, s, mflag, tolerance):
     # iii) did not previously use bisection and |s - b| >= |c - d| / 2
     # iv) previously used bisection and |b - c| < tolerance
     # v) did not previously use bisection and |c - d| < tolerance
-    if ((s < ((3 * a + b) / 4) or s > b) or
+    if ((not (3.0*a+b)/4.0 < s < b) or
         (mflag and (abs(s - b)) >= (abs(b - c) / 2)) or
         (not mflag and (abs(s - b)) >= (abs(c - d) / 2)) or
         (mflag and (abs(b - c)) < tolerance) or
