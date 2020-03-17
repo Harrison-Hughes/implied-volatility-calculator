@@ -34,11 +34,12 @@ def process_data(data):
     return csv_return_body
 
 
-# uses polymorphism to call the calc_implied_volatility method of each data instance
+# uses polymorphism to call the calc_implied_volatility and format_solution method of each data instance
 def polymorphic_solve(data_entries):
     results = []
     for data_entry in data_entries:
-        results.append(data_entry.calc_implied_volatility())
+        data_entry.calc_implied_volatility()
+        results.append(data_entry.format_solution())
     return results
 
 

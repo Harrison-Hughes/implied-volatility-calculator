@@ -1,4 +1,5 @@
 from scripts import data_methods as dm
+from math import isnan
 import sys
 import csv
 
@@ -8,12 +9,21 @@ file_output = sys.argv[2]
 # read input file
 with open(file_input, 'r') as input:
     input_reader = csv.reader(input, delimiter=',')
-    data = dm.convert_to_array_of_dict(input_reader, 10)
+    data = dm.convert_to_array_of_dict(input_reader, 1000)
 
 # process data from input file
 processedLines = dm.process_data(data)
 
 # write data to output file
 with open(file_output, 'w') as output:
+    output_writer = csv.writer(output, delimiter=',')
+    output_writer.writerow(['ID', 'Spot', 'Strike', 'Risk-Free Rate', 'Years to Expiry',
+                            'Option Type', 'Model Type', 'Implied Volatility', 'Market Price'])
+    nan_count = 0
     for line in processedLines:
-        output.write(str(line))
+        # print(line[7])
+        if isnan(line[7]):
+            nan_count += 1
+        if line[6] == 'BlackScholes':
+            output_writer.writerow(line)
+    print('total nan results: ', nan_count)

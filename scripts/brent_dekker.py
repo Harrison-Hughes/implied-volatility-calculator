@@ -7,7 +7,6 @@ def brent_dekker(f, a, b, max_iter=50, tolerance=1e-8, return_num_of_steps=False
 
     # verifies that initial guesses lie either side of the root, else returns 'nan'
     if (f(a) * f(b)) > 0:
-        print('bad guesses')
         if return_num_of_steps:
             return float('nan'), 0
         else:
