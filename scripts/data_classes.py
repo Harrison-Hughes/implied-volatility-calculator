@@ -43,19 +43,8 @@ class BlackScholes(InputData):
     # finds the implied volatility of a stock option
     def implied_volatility_stock(self):
 
-        if self.option_type == 'Put':
-            # trade value as a function of sigma, such that f(sigma) = V0, where sigma is the implied volatility
-            def trade_value_as_func_of_sigma(sigma):
-                d1, d2 = self.probability_factors(sigma)
-                return (-self.S * norm.cdf(-d1) + self.K * exp(-self.r * self.t) * norm.cdf(-d2))
-
-            def trade_value_root(sigma):
-                return trade_value_as_func_of_sigma(sigma) - self.V0
-
-            return brent_dekker(trade_value_root, 0.01, 0.99)
-
-        elif self.option_type == 'Call':
-            # trade value as a function of sigma, such that f(sigma) = V0 where sigma is the implied volatility
+        if self.option_type == 'Call':
+            # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
             def trade_value_as_func_of_sigma(sigma):
                 d1, d2 = self.probability_factors(sigma)
                 return (self.S * norm.cdf(d1) - self.K * exp(-self.r * self.t) * norm.cdf(d2))
@@ -65,15 +54,39 @@ class BlackScholes(InputData):
 
             return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
 
+        elif self.option_type == 'Put':
+            # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
+            def trade_value_as_func_of_sigma(sigma):
+                d1, d2 = self.probability_factors(sigma)
+                return (-self.S * norm.cdf(-d1) + self.K * exp(-self.r * self.t) * norm.cdf(-d2))
+
+            def trade_value_root(sigma):
+                return trade_value_as_func_of_sigma(sigma) - self.V0
+
+            return brent_dekker(trade_value_root, 0.01, 0.99)
+
         else:
             return float('nan')
 
     # finds the implied volatility of a futures option
-    # S is here taken to represent the value of the future underlying
-    #
+    # S is here taken to represent the value of the future underlying, F
+    # modified black-scholes, where (essentially) spot price is replaced with a discounted futures price
+    # e.g. S => F * exp(-r * (T - t))
     def implied_volatility_future(self):
 
-        if self.option_type == 'Put':
+        if self.option_type == 'Call':
+            # trade value as a function of sigma, such that f(sigma) = V0 where sigma is the implied volatility
+            def trade_value_as_func_of_sigma(sigma):
+
+                d1, d2 = self.probability_factors(sigma)
+                return (self.S * norm.cdf(d1) - self.K * norm.cdf(d2)) * exp(-self.r * self.t)
+
+            def trade_value_root(sigma):
+                return trade_value_as_func_of_sigma(sigma) - self.V0
+
+            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+
+        elif self.option_type == 'Put':
             # trade value as a function of sigma, such that f(sigma) = V0 where sigma is the implied volatility
             def trade_value_as_func_of_sigma(sigma):
                 # returns S * N(d1) - K * N(d2) * exp(-r * t) + K * exp(-r * t) - S * exp(-r * t)
@@ -85,16 +98,8 @@ class BlackScholes(InputData):
 
             return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
 
-        elif self.option_type == 'Call':
-            # trade value as a function of sigma, such that f(sigma) = V0 where sigma is the implied volatility
-            def trade_value_as_func_of_sigma(sigma):
-                d1, d2 = self.probability_factors(sigma)
-                return (self.S * norm.cdf(d1) - self.K * norm.cdf(d2)) * exp(-self.r * self.t)
-
-            def trade_value_root(sigma):
-                return trade_value_as_func_of_sigma(sigma) - self.V0
-
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+        else:
+            return float('nan')
 
     def calc_implied_volatility(self):
         if self.underlying_type == 'Stock':
