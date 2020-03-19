@@ -19,10 +19,6 @@ class InputData(ABC):
         self.model_type = data['Model Type']
         self.imp_vol = float('nan')  # i.e. sigma => volatility
 
-    def print_input_data(self):
-        print('ID:', self.ID, ', spot:', self.S, ', risk-free-interest:', self.r,
-              ', time to expiry:', self.t, ', strike:', self.K, ', market value:', self.V0)
-
     def format_solution(self):
         return [self.ID, self.S, self.K, self.r, self.t, self.option_type, self.model_type, self.imp_vol, self.V0]
 
@@ -53,7 +49,7 @@ class BlackScholes(InputData):
             def trade_value_root(
                 sigma): return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
@@ -94,7 +90,7 @@ class BlackScholes(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, such that f(sigma) = V0 where sigma is the implied volatility
@@ -106,7 +102,7 @@ class BlackScholes(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
 
         else:
             return float('nan')
@@ -145,7 +141,7 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
@@ -158,7 +154,7 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
 
         else:
             return float('nan')
@@ -185,7 +181,7 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
@@ -198,7 +194,7 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
 
         else:
             return float('nan')

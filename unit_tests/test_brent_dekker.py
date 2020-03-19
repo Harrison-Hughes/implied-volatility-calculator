@@ -2,8 +2,6 @@ import unittest
 from scripts import brent_dekker as bd
 from math import isclose, sqrt, cos, sin, isnan
 
-print(bd.__file__)
-
 
 class TestBrentDekkerRootFinder(unittest.TestCase):
 
@@ -40,7 +38,3 @@ class TestBrentDekkerRootFinder(unittest.TestCase):
             isclose(bd.brent_dekker(func2, -2, -1), -1.271026800))  # lower root
         self.assertTrue(isnan(bd.brent_dekker(  # no root between initial guesses
             func1, -2, 0)))
-
-
-if __name__ == "__main__":
-    unittest.main

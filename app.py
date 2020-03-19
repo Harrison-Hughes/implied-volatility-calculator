@@ -3,6 +3,10 @@ from math import isnan
 import sys
 import csv
 
+# timer to test efficiency
+import time
+start_time = time.time()
+
 file_input = sys.argv[1]
 file_output = sys.argv[2]
 
@@ -26,3 +30,5 @@ with open(file_output, 'w') as output:
             nan_count += 1
         output_writer.writerow(line)
     print('total nan results: ', nan_count)
+
+print("--- took %s seconds ---" % (time.time() - start_time))
