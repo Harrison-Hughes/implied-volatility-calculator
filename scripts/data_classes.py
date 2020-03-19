@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from abc import ABC, abstractmethod
 from scripts.brent_dekker import brent_dekker
+from scripts.bd_var_upper_bound import bd_var_upper_bound
 from math import log, sqrt, exp
 from scipy.stats import norm
 
@@ -49,7 +50,8 @@ class BlackScholes(InputData):
             def trade_value_root(
                 sigma): return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
@@ -61,7 +63,8 @@ class BlackScholes(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 0.01, 0.99)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         else:
             return float('nan')
@@ -90,7 +93,8 @@ class BlackScholes(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, such that f(sigma) = V0 where sigma is the implied volatility
@@ -102,7 +106,8 @@ class BlackScholes(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         else:
             return float('nan')
@@ -141,7 +146,8 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
@@ -154,7 +160,8 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         else:
             return float('nan')
@@ -181,7 +188,8 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         elif self.option_type == 'Put':
             # trade value as a function of sigma, s.t. f(sigma) = V0, where sigma is the implied volatility
@@ -194,7 +202,8 @@ class Bachelier(InputData):
             def trade_value_root(sigma):
                 return trade_value_as_func_of_sigma(sigma) - self.V0
 
-            return brent_dekker(trade_value_root, 10 ** -8, 10 - 10 ** -8)
+            # return brent_dekker(trade_value_root, 10 ** -8, 1 - 10 ** -8)
+            return bd_var_upper_bound(trade_value_root, 10 ** -8, [1, 2, 5, 10, 100, 1000])
 
         else:
             return float('nan')
