@@ -1,38 +1,24 @@
 from math import isnan
 
 # the brent-dekker root finding algorithm iteratively finds the root of a function (f) that lies between two starting points (a, b)
-# this version of the algorithm has been adapted to searching for implied volatility (to increase convergence speed) by having the upper bound (b) as an array,
-# such that the algorithm will iterate through the upper bounds if they do not lie either side of the solution (e.g. a = 0, [1, 2, 5, 10, 100, 1000])
+# this version of the algorithm has been adapted to searching for implied volatility (to increase convergence speed) by having the bounds (bounds) as an array,
+# such that the algorithm will iterate through the bounds if they do not lie either side of the solution (e.g. bounds =  [0, 1, 2, 5, 10, 100, 1000])
 
 # the function will automaticaly break after 'max_iter' number of iterations (although this isn't expected to be necessary),
 # or if a solution is found with a tolerance of 'tolerance'
 
 
-def bd_var_upper_bound(f, a, b_arr, max_iter=50, tolerance=1e-8, return_num_of_steps=False):
+def bd_var_bounds(f, bounds, max_iter=50, tolerance=1e-8):
 
-    # verifies that initial guesses lie either side of the root, else returns 'nan'
-    # if (f(a) * f(b)) > 0:
-    #     if return_num_of_steps:
-    #         return float('nan'), 0
-    #     else:
-    #         return float('nan')
+    if f(bounds[0]) > 0:  # if even the lowest bound lies above the root, return nan
+        return float('nan')
 
-    if f(a) > 0:
-        if return_num_of_steps:
-            return float('nan'), 0
-        else:
-            return float('nan')
-
-    b = float('nan')
-    for b_attempt in b_arr:
-        if f(b_attempt) > 0:
-            b = b_attempt
+    for i in range(len(bounds) - 1):
+        a, b = bounds[i], bounds[i+1]  # (a, b) are the pair of bounds
+        if (f(a) * f(b)) <= 0:  # if (a, b) lie either side of the root, the algorithm continues
             break
-
-    if isnan(b) or f(b) < 0:
-        if return_num_of_steps:
-            return float('nan'), 0
-        else:
+        # if even the two largest bounds lie below the root, the algorithm returns nan
+        if i == len(bounds) - 2:
             return float('nan')
 
     # if |f(a)| < |f(b)| then swap 'a' and 'b'
@@ -52,10 +38,7 @@ def bd_var_upper_bound(f, a, b_arr, max_iter=50, tolerance=1e-8, return_num_of_s
             f, a, b, c, d, prev_iter_used_bi, tolerance)
         steps_taken += 1
 
-    if return_num_of_steps:
-        return b, steps_taken
-    else:
-        return b
+    return b
 
 
 def brent_dekker_iterative_converge(f, a, b, c, d, mflag, tolerance):
@@ -129,17 +112,18 @@ if __name__ == '__main__':
     def f(x): return x ** 2 - 20
     def g(x): return (x + 3) * (x - 1) ** 2
 
-    root, steps = bd_var_upper_bound(
-        f, 3, 5, tolerance=10e-8, return_num_of_steps=True)
+    root = bd_var_bounds(
+        f, [3, 5], tolerance=10e-8)
     print('root is: {}'.format(root))
-    print('steps taken: {}'.format(steps))
 
-    root, steps = bd_var_upper_bound(
-        f, 2.5, 5.5, tolerance=10e-8, return_num_of_steps=True)
+    root = bd_var_bounds(
+        f, [2.5, 5.5], tolerance=10e-8)
     print('root is: {}'.format(root))
-    print('steps taken: {}'.format(steps))
 
-    root, steps = bd_var_upper_bound(
-        g, -4, 0.006, tolerance=10e-8, return_num_of_steps=True)
+    root = bd_var_bounds(
+        f, [4.4, 4.5], tolerance=10e-8)
     print('root is: {}'.format(root))
-    print('steps taken: {}'.format(steps))
+
+    root = bd_var_bounds(
+        g, [-4, 0.006], tolerance=10e-8)
+    print('root is: {}'.format(root))

@@ -1,5 +1,5 @@
 import unittest
-from scripts import brent_dekker as bd
+from notes import brent_dekker as bd
 from math import isclose, sqrt, cos, sin, isnan
 
 

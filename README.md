@@ -1,6 +1,6 @@
-# Mako interview question - implied volatility calculator
+## Mako interview question - implied volatility calculator
 
-An application to calculate implied volatility
+# An application to calculate implied volatility
 
 To use:
 
@@ -11,6 +11,14 @@ To use:
 - To use the data given to me specifically, replace 'input_file.csv' with 'data/input.csv'
 
 - i.e. python3 app.py data/input.csv output_file.csv
+
+Alternatively:
+
+- You may wish to run the app on only the first n lines in the csv file, as it can take a significant length of time to run (for a csv file of ~60,000 lines, expect up to approx. 10 mins)
+
+- To do this, in the root directory CLI run: 'python3 app.py input_file.csv output_file.csv n', where n is the number of lines you would like the program to run until
+
+- e.g. python3 app.py data/input.csv output_file.csv 1000
 
 To run unit tests:
 
