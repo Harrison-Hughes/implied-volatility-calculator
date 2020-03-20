@@ -3,13 +3,22 @@ from math import isnan
 import sys
 import csv
 
+# timer to test efficiency
+import time
+start_time = time.time()
+
 file_input = sys.argv[1]
 file_output = sys.argv[2]
 
 # read input file
 with open(file_input, 'r') as input:
     input_reader = csv.reader(input, delimiter=',')
-    data = dm.convert_to_array_of_dict(input_reader, 1000)
+    if len(sys.argv) == 3:
+        data = dm.convert_to_array_of_dict(input_reader)
+    elif len(sys.argv) == 4:
+        data = dm.convert_to_array_of_dict(input_reader, int(sys.argv[3]))
+    else:
+        raise ValueError("wrong number of arguments")
 
 # process data from input file
 processedLines = dm.process_data(data)
@@ -26,3 +35,5 @@ with open(file_output, 'w') as output:
             nan_count += 1
         output_writer.writerow(line)
     print('total nan results: ', nan_count)
+
+print("--- took %s seconds ---" % (time.time() - start_time))

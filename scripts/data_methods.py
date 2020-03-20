@@ -24,7 +24,7 @@ def dictionaryFormatter(row, keys):
 
 
 # iterates through the csv data to create object instances of each row
-# then calls polymorphic_solve on each instance to return
+# then calls polymorphic_solve on each instance to return the required results
 def process_data(data):
     data_entries = []
     for entry in data:
