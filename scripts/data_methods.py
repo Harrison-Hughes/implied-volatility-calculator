@@ -1,4 +1,4 @@
-from scripts.data_classes import BlackScholes, Bachelier
+from scripts.trade_classes import BlackScholes, Bachelier
 
 
 # takes the array of lines from the csv file and parses them into dictionaries

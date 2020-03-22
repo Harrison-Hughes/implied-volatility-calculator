@@ -29,11 +29,10 @@ with open(file_output, 'w') as output:
     output_writer.writerow(['ID', 'Spot', 'Strike', 'Risk-Free Rate', 'Years to Expiry',
                             'Option Type', 'Model Type', 'Implied Volatility', 'Market Price'])
     nan_count = 0
-
     for line in processedLines:
         if isnan(line[7]):
             nan_count += 1
         output_writer.writerow(line)
-    print('total nan results: ', nan_count)
+    print("--- total number of nan results: %s ---" % nan_count)
 
 print("--- took %s seconds ---" % (time.time() - start_time))

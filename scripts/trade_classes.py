@@ -5,7 +5,7 @@ from math import log, sqrt, exp
 from scipy.stats import norm
 
 
-class InputData(ABC):
+class TradeData(ABC):
 
     def __init__(self, data):
         self.ID = data['ID']
@@ -27,7 +27,7 @@ class InputData(ABC):
         pass
 
 
-class BlackScholes(InputData):
+class BlackScholes(TradeData):
 
     # returns d1 and d2, as defined in the black-scholes model
     def stock_probability_factors(self, sigma):
@@ -69,7 +69,7 @@ class BlackScholes(InputData):
     # finds the implied volatility of a futures option
     # S is here taken to represent the value of the future underlying, F
     # uses black's model (modified black-scholes), where (essentially) spot price is replaced with a discounted futures price
-    # e.g. S <=> F * exp(-r * (T - t))
+    # e.g. S <=> F * exp(-rt)
 
     # adapted to black-76 method by factoring r out of d1
     def futures_probability_factors(self, sigma):
@@ -118,7 +118,7 @@ class BlackScholes(InputData):
 
 # based on the paper 'Option Pricing Model: comparing Louis Bachelier with Black-Scholes Merton', Thomas, 2016 (i),
 # the book 'Martingale Methods in Financial Modelling', Musiela et al., 2008 (ii)
-class Bachelier(InputData):
+class Bachelier(TradeData):
 
     # returns d as from (ii) - eqn. 31a
     # d = d_i / d_ii = (S - Kexp(-rt) / (Kexp(-rt)*sigma*sqrt(t))
@@ -206,21 +206,3 @@ class Bachelier(InputData):
             self.imp_vol = self.implied_volatility_future()
         else:
             self.imp_vol = float('nan')
-
-
-if __name__ == '__main__':
-
-    data1 = {'ID': '23', 'Underlying Type': 'Stock', 'Underlying': '0.8714', 'Risk-Free Rate': '-0.0049', 'Days To Expiry': '211.8715',
-             'Strike': '0.9426', 'Option Type': 'Put', 'Model Type': 'BlackScholes', 'Market Price': '0.14370158'}
-
-    data2 = {'ID': '38', 'Underlying Type': 'Stock', 'Underlying': '0.5434', 'Risk-Free Rate': '-0.0045', 'Days To Expiry': '305.1700',
-             'Strike': '0.7103', 'Option Type': 'Call', 'Model Type': 'BlackScholes', 'Market Price': '0.09794149'}
-
-    data3 = {'ID': '48', 'Underlying Type': 'Future', 'Underlying': '0.9273', 'Risk-Free Rate': '-0.0020', 'Days To Expiry': '191.2009',
-             'Strike': '1.0938', 'Option Type': 'Put', 'Model Type': 'BlackScholes', 'Market Price': '0.2043676'}
-
-    print('bs_stock_put:', BlackScholes(data1).implied_volatility_stock())
-
-    print('bs_stock_call:', BlackScholes(data2).implied_volatility_stock())
-
-    print('bs_future_put:', BlackScholes(data3).implied_volatility_future())

@@ -14,7 +14,7 @@ To use:
 
 Alternatively:
 
-- You may wish to run the app on only the first n lines in the csv file, as it can take a significant length of time to run (for a csv file of ~60,000 lines, expect up to approx. 10 mins)
+- You may wish to run the app on only the first n lines in the csv file, as it can take a significant length of time to run (for a csv file of ~60,000 lines, expect up to approx. 20 mins on a slow computer)
 
 - To do this, in the root directory CLI run: 'python3 app.py input_file.csv output_file.csv n', where n is the number of lines you would like the program to run over
 
