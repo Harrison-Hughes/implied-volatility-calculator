@@ -1,7 +1,7 @@
 # the brent-dekker root finding algorithm iteratively finds the root of a function (f) that lies between two starting points (a, b)
 # this version of the algorithm has been adapted to searching for implied volatility (to increase convergence speed) by having the bounds (bounds) as an array,
 # such that the algorithm will iterate through the bounds if they do not lie either side of the solution (e.g. bounds =  [0, 1, 2, 5, 10, 100, 1000])
-# N.B. THIS WORKS ONLY ON INCREASING ROOTS (pos. gradient) - for a more widely applicable version, see inside the notes directory
+# N.B. THIS WORKS ONLY ON INCREASING ROOTS (i.e. with pos. gradient) - for a more widely applicable version, see inside the notes directory
 
 # the function will automaticaly break after 'max_iter' number of iterations (although this isn't expected to be necessary),
 # or if a solution is found with a tolerance of 'tolerance'
