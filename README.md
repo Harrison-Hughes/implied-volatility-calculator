@@ -1,4 +1,4 @@
-## Mako interview question - implied volatility calculator
+## Implied volatility calculator
 
 ### An application to calculate implied volatility
 
