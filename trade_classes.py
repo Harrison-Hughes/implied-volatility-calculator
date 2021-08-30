@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from abc import ABC, abstractmethod
-from scripts.bd_var_bounds import bd_var_bounds
+from bd_var_bounds import bd_var_bounds
 from math import log, sqrt, exp
 from scipy.stats import norm
 

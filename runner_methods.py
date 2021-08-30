@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from scripts.trade_classes import BlackScholes, Bachelier
+from trade_classes import BlackScholes, Bachelier
 from math import isnan
 import csv
 import time

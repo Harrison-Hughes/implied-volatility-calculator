@@ -1,1 +1,0 @@
-print('scripts module opened')

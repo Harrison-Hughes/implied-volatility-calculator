@@ -105,24 +105,3 @@ def condition_for_bisection_method(a, b, c, d, s, mflag, tolerance):
 
 def bisection_method(a, b):
     return (a + b) / 2.0
-
-
-if __name__ == '__main__':
-    def f(x): return x ** 2 - 20
-    def g(x): return (x + 3) * (x - 1) ** 2
-
-    root = bd_var_bounds(
-        f, [3, 5], tolerance=10e-8)
-    print('root is: {}'.format(root))
-
-    root = bd_var_bounds(
-        f, [2.5, 5.5], tolerance=10e-8)
-    print('root is: {}'.format(root))
-
-    root = bd_var_bounds(
-        f, [4.4, 4.5], tolerance=10e-8)
-    print('root is: {}'.format(root))
-
-    root = bd_var_bounds(
-        g, [-4, 0.006], tolerance=10e-8)
-    print('root is: {}'.format(root))
